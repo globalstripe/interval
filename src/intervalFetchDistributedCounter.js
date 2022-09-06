@@ -2,50 +2,20 @@
 
 import { useEffect, useState} from "react";
 
-let timerInterval = 10000 // ms
+let timerInterval = 240000 // ms
 
-export const  IntervalFetch = (props) => {
+export const  IntervalFetchDistributedCounter = (props) => {
 
     const [ActiveCounter, setActiveCounter] = useState(0);
-    const [UserCount, setUserCount] = useState(0);
     const [EliminatedCounter, setEliminatedCounter] = useState(0);
     const [count, setCount] = useState(0);
     const [now, setNow] = useState('Never Run');
     const [timerSet, setTimer] = useState(false)
 
-    // Use Effect takes 2 arguments 
-    // 1. a function (in this case setInterval
-    //    useEffect exectutes this function after the 
-    //    componenet renders.
-    //    You will see ActiveCounter and Eliminated Counter 
-    //    Initially render witj the default values of 0 then update
-    //    When the 'Effect' runs
 
-    //    Inside this function we can perform multiple side effects
-
-    useEffect(() => {
-        // GET request using fetch inside useEffect React hook
-        // Inside setInterval!!
-        // Use Effect will get called again when any of the data in it needs 
-        // Re-rendered
-        // The interval timer running ... if it updates values will cahase useeffect to run again
-        // But you want to ensure it doesnt start another timer
-
-        console.log('Run Use Effect Once - Setup Interval Timer')
-        console.log('Timer Interval Set ', timerInterval)
-        console.log('Timer Set ', timerSet)
-    
-     
-     if (timerSet === false ) {  // prevent the interval timer being set more than once
-        
-        setTimer(true)
-        
-        setInterval(() => {
-
-        console.log('Interval Timer Ran')
+    const main = () => {
         console.log('Increment Count')
-       
-              
+             
         fetch('https://europe-west1-the-new-vibe-staging.cloudfunctions.net/getActiveUsersCounterTotal')
             .then(resp => resp.json())
             .then(data => 
@@ -76,17 +46,44 @@ export const  IntervalFetch = (props) => {
                 }
             )
 
-        fetch('https://europe-west1-the-new-vibe-staging.cloudfunctions.net/getActiveUserTotal')
-            .then(resp => resp.json())
-            .then(data => 
-               {   
-                    console.log(data)
-                    console.log('Fetching Count Total')
-                    setUserCount(data.count)
-                }
-            )
 
+    }
+    // Use Effect takes 2 arguments 
+    // 1. a function (in this case setInterval
+    //    useEffect exectutes this function after the 
+    //    componenet renders.
+    //    You will see ActiveCounter and Eliminated Counter 
+    //    Initially render witj the default values of 0 then update
+    //    When the 'Effect' runs
+
+    //    Inside this function we can perform multiple side effects
+
+    useEffect(() => {
+        // GET request using fetch inside useEffect React hook
+        // Inside setInterval!!
+        // Use Effect will get called again when any of the data in it needs 
+        // Re-rendered
+        // The interval timer running ... if it updates values will cahase useeffect to run again
+        // But you want to ensure it doesnt start another timer
+
+        console.log('Run Use Effect Once - Setup Interval Timer')
+        console.log('Timer Interval Set ', timerInterval)
+        console.log('Timer Set ', timerSet)
+    
+        main()
+     
+     if (timerSet === false ) {  // prevent the interval timer being set more than once
+        
+        setTimer(true)
+        
+        setInterval(() => {
+
+        main()
+
+        console.log('Interval Timer Ran')
+       
         console.log('Sleep ', timerInterval)
+
 
         },
         timerInterval // setInterval execution interval
@@ -114,11 +111,7 @@ export const  IntervalFetch = (props) => {
         <div className="box2"><p>{ActiveCounter} </p>
         </div>
 
-        <h1 className="header">Counter Total: </h1>
-        <div className="box2"><p>{UserCount} </p>
-        </div>
-
-        <h1 className="header">Eliminated: </h1>
+        <h1 className="header">Eliminated Distributed: </h1>
         <div className="box2"><p>{EliminatedCounter} </p>
         </div>
 
@@ -137,4 +130,4 @@ export const  IntervalFetch = (props) => {
 
 };
 
-export default IntervalFetch;
+export default IntervalFetchDistributedCounter;
