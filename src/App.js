@@ -11,11 +11,11 @@ function App() {
       <header className="App-header">
         <h1 className="header">Next Live Show </h1>
            
-        <Timer deadline="December, 31, 2022" />
+        {/* <Timer deadline="December, 31, 2022" /> */}
       
         <h1 className="header">Counters: </h1>
         
-        <IntervalFetch active='Active' eliminated='Eliminated'  />
+        <IntervalFetch active='Active' />
     
         </header>
 
