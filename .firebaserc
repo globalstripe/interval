@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "friendlyeats-67200"
+  },
+  "targets": {
+    "friendlyeats-67200": {
+      "hosting": {
+        "eats": [
+          "friendlyeats-67200"
+        ],
+        "monitor": [
+          "tnvmonitor"
+        ]
+      }
+    }
+  }
+}

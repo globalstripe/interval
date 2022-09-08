@@ -1,9 +1,12 @@
 import './App.css';
-import Timer from './timer.js'
+//import Timer from './timer.js'
 import IntervalFetchCount from './intervalFetchCount.js'
 import IntervalFetchDistributedCounter from './intervalFetchDistributedCounter'
-import GACounter, { GACounterFetch } from './gaActiveFetch.js';
+//import GACounter, { GACounterFetch } from './gaActiveFetch.js';
 import styled from "styled-components";
+
+
+const baseUrl = 'https://europe-west1-the-new-vibe-staging.cloudfunctions.net/'
 
 const theme = {
   blue: {
@@ -44,7 +47,7 @@ Button.defaultProps = {
 
 async function zero() {
 
-  fetch('https://europe-west1-the-new-vibe-staging.cloudfunctions.net/zeroAllCounters?override=yes')
+  fetch(`${baseUrl}zeroAllCounters?override=yes`)
   .then(resp => resp.json())
   .then(data => 
      {   
@@ -56,36 +59,36 @@ async function zero() {
 
 async function executeupdate() {
 
-  fetch('https://europe-west1-the-new-vibe-staging.cloudfunctions.net/executeUpdateActiveUserCount')
+  fetch(`${baseUrl}executeUpdateActiveUserCount`)
   .then(resp => resp.json())
   .then(data => 
      {   
           console.log(data)
-          alert("Updated Actuals", data);
+          // alert("Updated Actuals", data);
       }
   )
 }
 
-async function inrement() {
+async function increment() {
 
-  fetch('https://europe-west1-the-new-vibe-staging.cloudfunctions.net/executeUpdateActiveUserCount')
+  fetch(`${baseUrl}incrementActiveUsersCounter`)
   .then(resp => resp.json())
   .then(data => 
      {   
           console.log(data)
-          alert("Updated Actuals", data);
+         // alert("Incrented Counter" + data);
       }
   )
 }
 
 async function decrement() {
 
-  fetch('https://europe-west1-the-new-vibe-staging.cloudfunctions.net/executeUpdateActiveUserCount')
+  fetch(`${baseUrl}decrementActiveUsersCounter`)
   .then(resp => resp.json())
   .then(data => 
      {   
           console.log(data)
-          alert("Updated Actuals", data);
+          //alert("Decremented Counter " + data);
       }
   )
 }
@@ -104,8 +107,8 @@ function App() {
       <div>
         <Button onClick={zero}>Zero All</Button>
         <Button onClick={executeupdate}>Update Active</Button>
-        <Button onClick={executeupdate}>Increment</Button>
-        <Button onClick={executeupdate}>Decrement</Button>
+        <Button onClick={increment}>Increment</Button>
+        <Button onClick={decrement}>Decrement</Button>
       </div>
 
       <header className="App-header">
